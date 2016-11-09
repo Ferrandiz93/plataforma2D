@@ -11,11 +11,14 @@ public class moneda : MonoBehaviour
 		rb.AddForce (new Vector2 (Random.Range(-100,100),100));
 	}
     // función para controlar cuando un objeto entra en el trigger
-    void OnTriggerEnter2D(Collider2D col)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        //Collider2D col hace referencia al objeto que ha entrado
-        Debug.Log("Alguien me ha tocado");
-        Destroy(gameObject);
+		if (col.gameObject.tag == "Player") {
+
+			//Collider2D col hace referencia al objeto que ha entrado
+			Debug.Log ("Alguien me ha tocado");
+			Destroy (gameObject);
+		}
     }
 
     // función para controlar cuando un objeto sale del trigger
