@@ -11,7 +11,7 @@ public class control_monedas : MonoBehaviour {
 	void Start(){
 		texto = GetComponent<Text> ();
 		resetear ();
-		suma_monedas (11);
+		suma_monedas (0);
 	}
 
 	public void suma_monedas(int cantidad){
