@@ -8,15 +8,22 @@ public class PlayerPedro : MonoBehaviour {
 	public float fsalto = 10f;
 	public float power = 1f;
 	public bool tocando_suelo = false;
+
+	public AudioClip sonido_salto;
+	public AudioClip sonido_herir;
+	public AudioClip sonido_moneda;
+
 	private Animator animator;
 	private Rigidbody2D rb;
 	private GameControlScript gcs;
+		private AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody2D> ();
 		gcs = GameObject.Find ("GameControl").GetComponent<GameControlScript> ();
+		audio = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -39,6 +46,7 @@ public class PlayerPedro : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && tocando_suelo) {
 			animator.SetBool  ("jump", true);
 			rb.AddForce (transform.up*fsalto);
+			audio.PlayOneShot (sonido_salto);
 		
 		}
 
@@ -79,7 +87,15 @@ public class PlayerPedro : MonoBehaviour {
 	}
 	void OnCollisionEnter2D (Collision2D col){
 		if (col.gameObject.tag == "Muerte") {
+			Invoke ("muerte", 1);
 			gcs.respawn ();
+			audio.PlayOneShot (sonido_herir);
+
 		}
 	}
+	
+	void muerte(){
+		gcs.respawn ();
+	}
+					
 }
